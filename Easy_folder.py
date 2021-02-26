@@ -1,5 +1,6 @@
 from tkinter import filedialog
 from tkinter import *
+from tkinter import messagebox
 import os
 
 root = Tk()
@@ -15,13 +16,17 @@ def folder_selection():
 
 def create_folder():
     folder_name = foldername.get()
-    path =  folder_selected + "/" + folder_name
+    path = folder_selected + "/" + folder_name
 
     try:
         if not os.path.exists(folder_name):
             os.makedirs(path)
+            message = "Folder created: {}".format(path)
+            messagebox.showinfo("Success!", message)
     except OSError:
-        print ('Error: Creating directory. ' +  folder_name)
+        error_message= "Error creating directory {}".format(path)
+        messagebox.showinfo("Failure!", error_message)
+        
 
 label = Label(root, text='No filepath selected')
 folder_button = Button(root, text='Select folder', command=folder_selection)
